@@ -1,0 +1,10 @@
+<?php
+
+	class CMyContent extends CContent
+	{
+		function CallbackRenderContent(&$arrayItems)
+		{
+			$arrayItems["MODULE_SIGNIN"] = $this->GetWebsite()->m_moduleSignin->RenderModule("");
+		}
+	}
+	

@@ -1,0 +1,17 @@
+=Getting Started - Step 3=
+Now it is time to install the boilerplate web application.
+
+
+Do the following:
+# Unpack the zip archive you just downloaded
+# Copy the files to your environment. The "www" folder is supposed to be the document root
+# Follow the instructions in the readme.txt file
+
+Please note that the "www" folder is the web server document root folder. If you do not want the "_source" folder to be a sub folder of the document root, you can put it to another place. In that case you have to adjust the path in the env.inc file.
+
+
+Please also note that the {WDK} scaffolder assumes that you can use .htaccess files. If this is not the case you may have to move some of the configuration settings to another web server configuration file.
+
+
+'''Good luck! Have fun!'''
+

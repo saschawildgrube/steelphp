@@ -1,0 +1,68 @@
+=Take the Tour=
+==More than a framework==
+{WDK} is more than a framework. It is a web application development kit.
+{IMAGE id="wdkdocs-architecture"}
+{WDK} supports building websites and web services.
+It is not just a collection of loosly coupled classes and libraries - but an integrated set of components that help you to build complex applications in large teams.
+
+
+==Getting started easily==
+Use the scaffolder to create new boilerplate applications.
+
+
+
+
+
+Build your own scaffolds to automate repetitive tasks when creating new features in your application system.
+
+==Testing as a feature==
+{WDK} has a unique yet unrivaled approach to testing.
+
+
+Test scripts are part of the application source code and are deployed into all environments. The task schedules then runs all test scripts round-robin continuously in all target environments.
+
+
+{WDK} comes with 300+ test scripts that check:
+* REST-API interfaces
+* HTML output
+* Individual functions and classes
+* Source code quality and files
+* Environment configuration
+==Information Architecture==
+Build navigation trees easily.
+
+
+CSV EXAMPLE FILE
+
+
+
+
+
+==Internationalization==
+{WDK}-based applications genuinely support multiple languages and regions.
+
+
+Ressource files contain localized text items:
+<pre>
+TID_BUTTON_CTA
+Click this!
+TID_TEXT_ABOUT
+This website is made using {WDK}.
+TID_TITLE_NICE
+A nice header
+TID_LINK_MORE
+Click here to read more...
+</pre>
+Localized text can also be contained in content pages, navigation trees and URL route definitions.
+==Security==
+Protection from user provided data:
+
+
+code snippet mit GetVarInsecure()
+
+
+
+==Web services==
+Powerful foundation to build your own webservices that speak XML, JSON, HTML, CSV, and any other format you can imagine.
+
+SCREENSHOTS OF DIFFERENT WEBSERVICE OUTPUT FORMATS IN A CAROUSSEL

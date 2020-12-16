@@ -1,0 +1,21 @@
+=Getting Started - Step 1=
+
+Before you continue to scaffold your first website you have to make a choice now.
+
+<div class="row">
+	<div class="col-sm-6">
+==Basic==
+*	'''10 minutes''' to get started
+* No database setup required
+* Create a website without any interactive content
+{LINK style="calltoaction" text="Scaffold a basic website" content="gettingstarted-step1-basic"}
+	</div>
+	<div class="col-sm-6">
+==Dynamic==
+* '''30 minutes''' to get started
+* Database setup required
+* Create web application with web services
+* Supports interactive content
+{LINK style="calltoaction" text="Scaffold a dynamic website" content="gettingstarted-step1-dynamic"}
+	</div>
+</div>

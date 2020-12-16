@@ -1,0 +1,123 @@
+{TEASER
+	title="?TID_TITLE_HERO?"
+	text="?TID_TEXT_HERO?"
+	linkurl="{URL content="gettingstarted"}"
+	linktext="?TID_LINK_CTA?"
+	style="jumbotron"
+}
+<section class="container padding-top-3x padding-bottom">
+	<!-- block-title: Possible color classes ".block-title-default, .block-title-primary, .block-title-secondary, .block-title-success, .block-title-info, .block-title-warning, .block-title-danger, .block-title-light". -->
+	<!--<h2 class="block-title block-title-secondary space-top">
+  	<i class="material-icons trending_flat"></i>
+  	?TID_TITLE_CLAIM?
+	</h2>-->
+	<!-- .block-title -->
+	<div class="row mobile-center">
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 padding-top-2x">  
+      <div class="row">
+        <div class="col-sm-4"> <!-- scrollReveal sr-scaleUp sr-ease-in-out-back -->
+          <div class="box-with-icon text-center">
+            <i class="fa fa-cube"></i>   
+            <h3 class="bwi-title">?TID_TITLE_CLAIM-ARCHITECTURE?</h3>
+            <p>?TID_TEXT_CLAIM-ARCHITECTURE?</p>
+          </div>
+        </div>
+        <div class="col-sm-4"> <!-- scrollReveal sr-scaleUp sr-ease-in-out-back -->
+          <div class="box-with-icon text-center">
+            <i class="fa fa-database"></i>
+            <h3 class="bwi-title">?TID_TITLE_CLAIM-CRUD?</h3>
+            <p>?TID_TEXT_CLAIM-CRUD?</p>
+          </div>
+        </div>
+        <div class="col-sm-4"> <!-- scrollReveal sr-scaleUp sr-ease-in-out-back -->
+          <div class="box-with-icon text-center">
+            <i class="fa fa-check-square"></i>
+            <h3 class="bwi-title">?TID_TITLE_CLAIM-TDD?</h3>
+            <p>?TID_TEXT_CLAIM-TDD?</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"> <!-- scrollReveal sr-scaleUp sr-ease-in-out-back -->
+          <div class="box-with-icon text-center">
+            <i class="fa fa-bolt"></i>
+            <h3 class="bwi-title">?TID_TITLE_CLAIM-NOTYAPF?</h3>
+            <p>?TID_TEXT_CLAIM-NOTYAPF?</p>
+          </div>
+        </div>
+        <div class="col-sm-4"> <!-- scrollReveal sr-scaleUp sr-ease-in-out-back -->
+          <div class="box-with-icon text-center">
+            <i class="fa fa-group"></i>
+            <h3 class="bwi-title">?TID_TITLE_CLAIM-TEAM?</h3>
+            <p>?TID_TEXT_CLAIM-TEAM?</p>
+          </div>
+        </div>
+        <div class="col-sm-4"> <!-- scrollReveal sr-scaleUp sr-ease-in-out-back -->
+          <div class="box-with-icon text-center">
+            <i class="fa fa-shield"></i>
+            <h3 class="bwi-title">?TID_TITLE_CLAIM-SECURITY?</h3>
+            <p>?TID_TEXT_CLAIM-SECURITY?</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- .col-lg-6.col-lg-offset-1.col-md-6 -->
+  </div><!-- .row -->
+</section><!-- .container -->
+<!--
+<section>
+	<div class="center">
+		{CTA}
+	</div>
+</section>
+-->
+<section class="container padding-top-3x padding-bottom">
+	<div class="container"> <!-- text-light --->
+	  <div class="row padding-top-3x padding-bottom-2x">
+			<div class="col-lg-12 col-md-12">
+				<div class="row">
+					<div class="col-sm-3">
+						{CTA}
+					</div>
+					<div class="col-sm-3">
+						<div class="text-box">
+							<h3 class="text-box-title">?TID_TITLE_INFO-LICENSE?</h3>
+							<p class="text-box-text">?TID_TEXT_INFO-LICENSE?</p>
+              <a href="{URL content="wdkdocs-license"}" class="btn btn-default btn-icon-right waves-effect"> <!--btn-light-transparent -->
+              	?TID_NAVIGATION_LICENSE?
+								<i class="material-icons trending_flat"></i>
+							</a>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="text-box">
+							<h3 class="text-box-title">?TID_TITLE_INFO-ENTERPRISE?</h3>
+              <p class="text-box-text">?TID_TEXT_INFO-ENTERPRISE?</p>
+              <!--<a href="#" class="btn btn-default btn-icon-right waves-effect">
+                More
+                <i class="material-icons trending_flat"></i>
+              </a>-->
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="text-box">
+              <h3 class="text-box-title">?TID_TITLE_INFO-SUPPORT?</h3>
+              <p class="text-box-text">?TID_TEXT_INFO-SUPPORT?</p>
+              <a href="https://www.wildgrube.com/start/#contact" target="_blank" class="btn btn-default btn-icon-right waves-effect">
+                ?TID_NAVIGATION_CONTACT?
+                <i class="material-icons trending_flat"></i>
+              </a> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- .row -->
+	</div><!-- .container -->
+</section><!-- .fw-section -->
+<!--
+=SHOWCASES=
+
+# Passvault
+# Checklist HQ
+{CTA}
+-->
+

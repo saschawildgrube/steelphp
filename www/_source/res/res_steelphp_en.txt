@@ -1,0 +1,50 @@
+TID_TEXT_MISSION
+TODO: Mission
+TID_TEXT_VISION
+TODO: Vision
+TID_TITLE_HERO
+Welcome to SteelPHP
+TID_TEXT_HERO
+SteelPHP is more than yet another php-based framework. It is a website development kit. It has all it takes to build complex, robust and secure web applications - from early prototypes to enterprise applications.<br/><br/>It supports a strict architecture approach.<br/><br/>It does not follow widespread conventions just for the sake of it.<br/><br/>The tallest buildings are made of steel.
+TID_TITLE_CLAIM
+6 important facts about SteelPHP
+TID_TITLE_CLAIM-ARCHITECTURE
+Strict architecture approach
+TID_TEXT_CLAIM-ARCHITECTURE
+In this website development kit each bit has its defined place. SteelPHP is not a set of loosely coupled components. SteelPHP comes with a strict architecture approach - on how websites and web services interact with each other, how databases are encapsulated, and how web applications are built and assembled internally.
+TID_TITLE_CLAIM-CRUD
+CRUD on steroids
+TID_TEXT_CLAIM-CRUD
+SteelPHP comes with a powerful CRUD feature. Database encapsulation, web service implementation, and management GUI is derived from configuration and code implementation (not just scaffolding) for ultimate development speed. E.g. adding a new attribute to an existing entity requires only 3 little changes. This is unrivaled.
+TID_TITLE_CLAIM-TDD
+Extreme Test Driven Development
+TID_TEXT_CLAIM-TDD
+In SteelPHP automated tests are not just part of a deployment process but a built-in feature of the web application you are building. Tests are part of the actual source code and deployed and continuously executed in production.
+TID_TITLE_CLAIM-NOTYAPF
+It’s not YAPF
+TID_TEXT_CLAIM-NOTYAPF
+SteelPHP is not just yet another php framework. This website development kit does not blindly follow conventions (like PSR-2) just for the sake of it. Its templating and separation of concerns approach is way beyond MVC. Its done right - not just like all others do it.
+TID_TITLE_CLAIM-TEAM
+Cool for large teams
+TID_TEXT_CLAIM-TEAM
+SteelPHP comes with a separation of concerns approach and code organization scheme that makes it suitable for larger projects teams. Different features and components alongside the vertical stack can be developed independently and simultaneously.
+TID_TITLE_CLAIM-SECURITY
+Security built-in
+TID_TEXT_CLAIM-SECURITY
+Needless to say but of course SteelPHP comes with various built-in security features. There is protection from malicious user content, means against SQL injection, cross site scripting, CSRF, session hijacking, tests that detect an insecure environment setup and more.
+TID_TITLE_INFO-LICENSE
+License
+TID_TEXT_INFO-LICENSE
+{WDK} is licensed under the Apache License 2.0.
+TID_TITLE_INFO-ENTERPRISE
+Enterprise
+TID_TEXT_INFO-ENTERPRISE
+{WDK} is enterprise ready. The architecture approach supports the idea of web services in a DMZ with web services and database servers within the corporate network.
+Security is built-in by design and should help you to survive any security officer's audit.
+No one get's fired for using {WDK}.
+TID_TITLE_INFO-SUPPORT
+Support
+TID_TEXT_INFO-SUPPORT
+I want {WDK} to thrive and evolve and I will make sure that you get all the support needed to learn and use {WDK} in your projects.<br/>
+When you find bugs, I will fix them. If you submit productizeable ideas, I will implement them if ever feasible.<br/>
+Project-specific consulting is available. Get in touch!

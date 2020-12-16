@@ -1,0 +1,134 @@
+/* Navigation bar*/ 
+#navbar-fixed-top-overlap 
+{
+	padding-bottom: 61px;	   
+}
+
+/* Side Bar Navigation */
+.widget_categories ul li
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0;
+}
+
+
+/* Lists */
+ol
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 30px;	
+}
+ul
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 21px;	
+}
+
+ul li,
+ol li 
+{
+	margin-top: 0px;
+	margin-bottom: 8px;
+}
+
+
+
+/* Headers */
+h1
+{
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
+h2
+{
+	margin-top: 40px;
+	margin-bottom: 10px;*/
+}
+
+h3, h4, h5
+{
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+
+/* Buttons */
+button.btn-default
+{
+	background-color: #dd0000;
+	color: white;
+}
+button.btn-default:hover
+{
+	background-color: red;
+}
+
+/* Buttons in Toolbars */
+
+a.btn-default,
+a.btn-default:hover
+{
+	background-color: lightgrey;
+	color: black;
+}
+a.btn-default img
+{
+	display: inline	
+}
+
+
+
+/* Teasers */ 
+h2.panel-title
+{
+	padding-top: 0px;	
+}
+
+
+/* Heros / Jumbotron */
+.jumbotron
+{
+	padding-left: 10px;
+}
+.jumbotron p
+{
+	font-weight: 500;	
+}
+@media screen and (min-width: 768px)
+.jumbotron
+{
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+
+
+/* Loading the "Loading..." text from text resources does not work currently */
+.mdl-spinner:not(.is-upgraded).is-active:after {
+  content: "Loading...";
+}
+
+
+/* Progress indicator */
+.wdk-progressindicator
+{
+  display: inline-block;
+  opacity: 0;
+  max-width: 0;
+  -webkit-transition: opacity 0.25s, max-width 0.45s;
+  -moz-transition: opacity 0.25s, max-width 0.45s;
+  -o-transition: opacity 0.25s, max-width 0.45s;
+  transition: opacity 0.25s, max-width 0.45s;
+}
+.wdk-progressindicator-container.active
+{
+  cursor: progress;
+}
+.wdk-progressindicator-container.active .wdk-progressindicator
+{
+  opacity: 1;
+  max-width: 50px;
+}

@@ -1,0 +1,8 @@
+=Getting Started - Step 2 - Basic=
+Enter all requested information! Don't worry, everything can be changed later. However, changing the application name later is a lot of work, so choose wisely!
+{SCAFFOLDER}
+
+
+Once you downloaded the zip file containing your boilerplate web application go to step 2.
+
+{LINK content="gettingstarted-step2" text="Go to step 2" style="calltoaction"} 

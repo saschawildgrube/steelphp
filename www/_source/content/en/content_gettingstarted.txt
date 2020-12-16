@@ -1,0 +1,15 @@
+=Getting Started=
+
+The easiest way to get started: Just try it!
+
+
+# Use the scaffolder to create the your first boilerplate web application
+# Set up a LA(M)P stack to install your {WDK}-based application on
+# Copy the files into your LA(M)P stack and follow the instructions in the readme file
+
+Have fun!
+
+
+{LINK content="gettingstarted-step1" text="Go to Step 1" style="calltoaction"}
+
+

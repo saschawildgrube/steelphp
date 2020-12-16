@@ -1,0 +1,63 @@
+{DOCTYPE}
+
+<html lang="{LANGUAGE}">
+{HEADER}
+
+<!-- Adding/Removing class ".parallax" is enabling/disabling background parallax effect on elements with background images and attributes data-stellar-background-ratio applied to them. Make sure you also added/removed link to stellar.js script before </bo dy>. -->
+<!-- Adding/Removing class ".page-preloading" is enabling/disabling background smooth page transition effect and spinner. Make sure you also added/removed link to page-preloading.js script before </bo dy> and ".page-preloader" right after <bo dy> tag. -->
+<body class="page-preloading">
+
+  <div class="page-preloader">
+    <div class="spinner-wrap">
+      <div class="mdl-spinner mdl-js-spinner is-active"></div>
+    </div>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- Add class ".header-sticky" to make navbar stuck when it hits the top of the page. Another modifier class is: ".header-fullwidth" to stretch navbar and make it occupy 100% of the page width. The screen width at which header collapses can be controlled through the variable "$nav-collapse" in sass/variables.scss -->
+    <header class="site-header header-sticky">
+    	
+    	{NAVIGATION_HORIZONTALPATH}
+    	
+    </header>
+
+    <section class="container" style="padding-top: 20px;">
+    	<!--{NAVIGATION_CURRENTPATH}-->
+    	{MESSAGE_UNDERCONSTRUCTION}
+			{MESSAGES}
+			{MODULE_LOGIN_FORM}
+		</section>
+		<section class="container" style="padding-bottom: 50px;">
+			{CONTENT}
+		</section>
+
+    <a href="#" class="scroll-to-top-btn">
+      <i class="material-icons keyboard_arrow_up"></i>
+    </a>
+
+    <footer class="footer">
+      <div class="copyright">
+        <div class="container">
+          <div class="inner">
+          		<div class="column">
+					      <div class="footer-main mobile-center">
+						 			{NAVIGATION_FOOTER}
+						 		</div>
+						 	</div>
+
+            <div class="column" style="padding-left: 30px;">
+              <p>{COPYRIGHT}<br/>{POWEREDBY}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+
+
+</body>
+
+</html>

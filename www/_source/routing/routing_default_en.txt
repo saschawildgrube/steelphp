@@ -1,0 +1,6 @@
+CONTEXTTYPE	;CONTEXT									;ALIAS
+content			;index										;start
+content			;tour											;take the tour
+content			;wdkdocs									;documentation
+content			;wdkdocs-license					;license
+content			;about										;about this website

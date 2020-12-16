@@ -1,0 +1,14 @@
+=Getting Started - Step 2=
+
+Set up a LA(M)P stack environment that has:
+# A linux operating system
+# An apache web server (or a web server with comparable features, but this would require you to make your hands dirty first)
+# php
+# Optional: A mySQL database - only if you chose the '''dynamic''' option
+
+{WDK} will tell you later if certain plugins or specific system configuration is missing.
+
+
+Go to step 3 to install your first web application!
+
+{LINK content="gettingstarted-step3" style="calltoaction" text="Go to Step 3"}

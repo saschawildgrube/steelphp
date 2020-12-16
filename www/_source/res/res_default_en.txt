@@ -1,0 +1,68 @@
+TID_TITLE
+SteelPHP
+TID_TITLE_DEFAULT
+?TID_TITLE?
+TID_META_KEYWORDS_DEFAULT
+PHP Framework SteelPHP WDK Website Development Kit SDK CRUD
+TID_META_DESCRIPTION_DEFAULT
+SteelPHP is a php-based website development kit. It is more than a framework. It&#039;s the architect&#039;s choice for any complex enterprise php application project.
+TID_COPYRIGHT
+Copyright &copy; {WDK_COPYRIGHT_PERIOD} by {WDK_AUTHOR}
+TID_NAVIGATION_CURRENTPATH
+You are here
+TID_NAVIGATION_START
+Start
+TID_NAVIGATION_GETTINGSTARTED
+Getting Started
+TID_NAVIGATION_TOUR
+Tour
+TID_NAVIGATION_WDKDOCS
+Documentation
+TID_NAVIGATION_SCAFFOLDER
+Scaffolder
+TID_NAVIGATION_ADMIN
+Admin
+TID_NAVIGATION_ABOUT
+About this website
+TID_NAVIGATION_DATAPROTECTION
+Data Protection
+TID_NAVIGATION_CONTACT
+Contact
+TID_NAVIGATION_SIGNIN
+Signin
+TID_NAVIGATION_LOGIN
+Login
+TID_NAVIGATION_LOGOUT
+Good Bye
+TID_NAVIGATION_VALIDATOR
+Validate
+TID_NAVIGATION_USERMANAGEMENT
+User Management
+TID_NAVIGATION_USERSETTINGS
+My Settings
+TID_NAVIGATION_LICENSE
+License
+TID_TITLE_START 
+SteelPHP
+TID_TITLE_CONTACT
+Contact Information
+TID_TEXT_START
+This Website has been created using the Website Development Kit scaffolder.
+TID_INFO_POSTLOGIN
+Welcome back!
+TID_TEXT_LOGOUT
+You are now logged out. Please come back soon!
+TID_TEXT_ADMIN
+Welcome to the administration area. Here you can find all tools to control this website.
+TID_TOOLTIP_SSL
+This page has been transferred using HTTPS.
+TID_TOOLTIP_SWITCH2HTTP
+Change protocol to HTTP.
+TID_TOOLTIP_SWITCH2HTTPS
+Change protocol to HTTPS.
+TID_TOOLTIP_SENDMAIL
+Click here to send a mail!
+TID_TEXT_LOGINSTATUSWELCOMEUSER
+Hi {USERNAME}!
+TID_LINK_CTA
+Getting Started!
