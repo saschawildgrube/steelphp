@@ -17,7 +17,7 @@
 		{
 			
 			$arrayMeta = array();
-			$arrayMeta["version"] = "0.1"; 
+			$arrayMeta["version"] = WDK_VERSION; 
 			$arrayMeta["author"] = "Sascha Wildgrube";
 			$arrayMeta["copyright"] = "?TID_COPYRIGHT?";
 			$arrayMeta["copyright_since"] = WDK_COPYRIGHT_SINCE;
@@ -201,6 +201,11 @@
 			$this->SetOutputItem("WDK","SteelPHP");
 			$this->SetOutputItem("WDK_DOCS_URL",$this->MakeContentURL("wdkdocs"));
 			$this->SetOutputItem("WDK_SCAFFOLDER_URL",$this->MakeContentURL("scaffolder"));
+
+			// FORK ME ON GITHUB
+			$this->IncludeElement('forkmeongithub');
+			$forkmeongithub = new CForkMeOnGithubElement($this,'default');
+			$this->SetOutputItem('FORKMEONGITHUB',$forkmeongithub->RenderForkMeOnGithub('saschawildgrube','steelphp'));
 
 			
 
