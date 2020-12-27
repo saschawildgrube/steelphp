@@ -71,7 +71,7 @@
 </section>
 -->
 <section class="container padding-top-3x padding-bottom">
-	<div class="container"> <!-- text-light --->
+	<div class="container"> <!-- text-light -->
 	  <div class="row padding-top-3x padding-bottom-2x">
 			<div class="col-lg-12 col-md-12">
 				<div class="row">

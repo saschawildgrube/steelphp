@@ -32,6 +32,8 @@
 			$arrayConfig["session_ip"] = true;
 			$arrayConfig["csrf_defuse"] = true;  
 			
+			$arrayConfig['opengraph'] = true;
+			
 	
 			$arrayConfig["cache_deactivate"] = true;
 			$arrayConfig["cache_allow_nocache"] = true;
