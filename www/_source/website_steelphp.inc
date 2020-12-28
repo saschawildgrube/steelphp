@@ -93,9 +93,6 @@
 			$assembly = new CAssembly($this,"layout-unison");
 			$assemblyLine->AddAssembly($assembly);
 
-			$assembly = new CAssembly($this,"layout-steelphp");
-			$assemblyLine->AddAssembly($assembly);
-
 			parent::CallbackInitAssemblyLine($assemblyLine);
 		}
 		
