@@ -121,7 +121,7 @@
 			$passwordpolicy->SetPolicy($this->GetConfig("passwordpolicy"));
 
 			$this->IncludeModule("user/login");
-			$this->m_moduleLogin = new CLoginModule($this,"login","logout");
+			$this->m_moduleLogin = new CLoginModule($this,"admin","logout");
 			$this->RegisterModule($this->m_moduleLogin);
 			
 			$this->IncludeModule("user/useremail");
