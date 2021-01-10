@@ -2,7 +2,7 @@
 SteelPHP is more than yet another php-based framework. It is a website development kit. It has all it takes to build complex, robust and secure web applications - from early prototypes to enterprise applications.
 
 ## Getting started
-The best way to start a new project with SteelPHP is to use the scallfolder:
+The best way to start a new project with SteelPHP is to use the scaffolder:
 https://www.steelphp.com/gettingstarted/
 
 ## Licence
