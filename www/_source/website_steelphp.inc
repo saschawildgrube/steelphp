@@ -88,25 +88,25 @@
 					
 		}
 		
-		function CallbackInitAssemblyLine(&$assemblyLine)
+		function OnInitAssemblyLine(&$assemblyLine)
 		{
 			$assembly = new CAssembly($this,"layout-unison");
 			$assemblyLine->AddAssembly($assembly);
 
-			parent::CallbackInitAssemblyLine($assemblyLine);
+			parent::OnInitAssemblyLine($assemblyLine);
 		}
 		
-		function CallbackInitRoutingMap()
+		function OnInitRoutingMap()
 		{
-			parent::CallbackInitRoutingMap();
+			parent::OnInitRoutingMap();
 			$this->LoadRoutingMap("default");
 		}
 
 		
 		
-		function CallbackInit()
+		function OnInit()
 		{
-			$bResult = parent::CallbackInit();
+			$bResult = parent::OnInit();
 			
 			$this->AddHeader("<!--AVAILABILITY-CHECK-->");			
 
@@ -227,9 +227,9 @@
 		}
 	
 	
-		function CallbackUserCheckName($strUsername)
+		function OnUserCheckName($strUsername)
 		{
-			if (parent::CallbackUserCheckName($strUsername) == false)
+			if (parent::OnUserCheckName($strUsername) == false)
 			{
 				return false;	
 			}
@@ -240,9 +240,9 @@
 			return true;
 		}
 		
-		function CallbackUserChangePassword($strOldPassword,$strNewPassword)
+		function OnUserChangePassword($strOldPassword,$strNewPassword)
 		{
-			$bResult = parent::CallbackUserChangePassword($strOldPassword,$strNewPassword);
+			$bResult = parent::OnUserChangePassword($strOldPassword,$strNewPassword);
 			if (!$bResult)
 			{
 				return false;
@@ -259,14 +259,14 @@
 
 	
 	
-		function CallbackPreContent()
+		function OnPreContent()
 		{
 			/*
 				Called before the actual content rendering takes place.
 			*/
 		}
 
-		function CallbackPostContent()
+		function OnPostContent()
 		{
 			/*
 				Called after the actual content rendering takes place.
@@ -288,7 +288,7 @@
 			*/
 		}
 		
-		function CallbackRenderSpecialContent($strContentID)
+		function OnRenderSpecialContent($strContentID)
 		{
 			/*
 				Before trying to load the content from a file, this function is called.
@@ -327,31 +327,31 @@
 			}			
 			
 			
-			return parent::CallbackRenderSpecialContent($strContentID); 
+			return parent::OnRenderSpecialContent($strContentID); 
 		}
 
-		function CallbackRenderContentException()
+		function OnRenderContentException()
 		{
 			/*
 				This function is called if a requested content is not found.
 				If you were implementing a wiki, this would be the place to create a
 				new page.
 			*/
-			return parent::CallbackRenderContentException();
+			return parent::OnRenderContentException();
 		}
 
 
-		function CallbackRenderGenericOutputItem($strItem, $arrayAttributes)
+		function OnRenderGenericOutputItem($strItem, $arrayAttributes)
 		{
 			switch ($strItem)
 			{
 			default:
-				return parent::CallbackRenderGenericOutputItem($strItem, $arrayAttributes);
+				return parent::OnRenderGenericOutputItem($strItem, $arrayAttributes);
 			}
 		}
 		
 
-		function CallbackRenderNavigation($strOutput)
+		function OnRenderNavigation($strOutput)
 		{
 			/*
 				This function is called after content rendering is complete.
@@ -419,7 +419,7 @@
 
 
 
-		function CallbackCheckCondition($strCondition)
+		function OnCheckCondition($strCondition)
 		{
 			if ($strCondition == "wdkdocs")
 			{
@@ -449,13 +449,13 @@
 				}
 			}			
 			
-			return parent::CallbackCheckCondition($strCondition);	
+			return parent::OnCheckCondition($strCondition);	
 		}
 		
 		
 		
 		
-		function CallbackGetDateLocalFormat($strCountryID)
+		function OnGetDateLocalFormat($strCountryID)
 		{
 			switch ($strCountryID)
 			{
@@ -464,7 +464,7 @@
 			}
 		}
 
-		function CallbackGetTimeLocalFormat($strCountryID)
+		function OnGetTimeLocalFormat($strCountryID)
 		{
 			switch ($strCountryID)
 			{
