@@ -6,7 +6,7 @@ The best way to start a new project with SteelPHP is to use the scaffolder:
 https://www.steelphp.com/gettingstarted/
 
 ## Licence
-Copyright 2020-2022 by Sascha Wildgrube
+Copyright 2020-2023 by Sascha Wildgrube
 
 Licensed under the Apache License, Version 2.0 (the "License");
 
