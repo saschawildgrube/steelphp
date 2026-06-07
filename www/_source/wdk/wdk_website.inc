@@ -41,7 +41,7 @@
 	class CWebSite extends CWebApplication
 	{
 		private $m_strSourceDir;
-		private $m_strWWWRootDir;
+		private $m_strWWWDir;
 		private $m_strStyleSheetsDir;
 		private $m_strJavaScriptsDir;
 		private $m_strImagesDir;
@@ -49,7 +49,7 @@
 		private $m_strVideosDir;
 		private $m_strDownloadDir;
 		
-		private $m_strRootURLnoprotocol;
+		private $m_strRootURLnoProtocol; 
 		private $m_strRootURL;
 		private $m_strCurrentURL;
 		private $m_strProtocol;
@@ -128,10 +128,9 @@
 		private $m_elementTel;
 		private $m_elementSourceCode;
 		private $m_elementYouTube;
-		private $m_elementGoogleMaps;
 		private $m_elementCountDown;
 		
-		private $m_arrayDynamicNavigationTrees;
+		private $m_arrayDynamicNavigationTree;
 		
 		function __construct(
 			$strRootURL,
@@ -193,17 +192,18 @@
 			// Init Generic Output Items
 			$this->m_arrayGenericOutputItems = array();
 			$this->RegisterGenericOutputItem('URL',array('content','language'));
+			$this->RegisterGenericOutputItem('DOWNLOADURL',array('filepath'));
+			$this->RegisterGenericOutputItem('YOUTUBE',array('id'));
 			$this->RegisterGenericOutputItem('ICON',array('id'));
 			$this->RegisterGenericOutputItem('IMAGEURL',array('id','ext','context'));
 			$this->RegisterGenericOutputItem('FONTURL',array('id','context'));
 			$this->RegisterGenericOutputItem('VIDEOURL',array('id','context'));
+			$this->RegisterGenericOutputItem('PHONE',array('tel','text'));
 			$this->RegisterGenericOutputItem('IMAGE',array('id','ext','style','text'));
+			$this->RegisterGenericOutputItem('LINK',array('url','content','text','style','externallink'));
 			$this->RegisterGenericOutputItem('TEASER',array('title','text','style','linkurl','linktext','externallink'));
 			$this->RegisterGenericOutputItem('IMAGETEASER',array('title','text','style','linkurl','linktext','imageurl','externallink'));
-			$this->RegisterGenericOutputItem('LINK',array('url','content','text','style','externallink'));
-			$this->RegisterGenericOutputItem('PHONE',array('tel','text'));
-			$this->RegisterGenericOutputItem('DOWNLOADURL',array('filepath'));
-			$this->RegisterGenericOutputItem('YOUTUBE',array('id'));
+			$this->RegisterGenericOutputItem('ICONTEASER',array('title','text','style','linkurl','linktext','iconid','externallink'));
 			$this->RegisterGenericOutputItem('PORTFOLIO',array(
 				'payload1','title1','text1','linktext1','linkurl1','imageurl1','external1',
 				'payload2','title2','text2','linktext2','linkurl2','imageurl2','external2',
@@ -226,11 +226,10 @@
 				'payload19','title19','text19','linktext19','linkurl19','imageurl19','external19',				
 				'payload20','title20','text20','linktext20','linkurl20','imageurl20','external20',				
 				'style'));
-			$this->RegisterGenericOutputItem('GOOGLEMAPS',array('location'));
 			$this->RegisterGenericOutputItem('COUNTDOWN',array('datetime','timezone'));
 			
 
-			// Init Timezone Default
+			// Init Time Zone Default
 			$this->SetTimeZone('UTC');
 
 			// Initialize Meta
@@ -394,7 +393,6 @@
 			$this->m_elementTel = null;
 			$this->m_elementSourceCode = null;
 			$this->m_elementYouTube = null;
-			$this->m_elementGoogleMaps = null;
 
 
 
@@ -706,9 +704,9 @@
 
 			// Manage Layout
 			$strLayout = $this->GetLayout();
-			if ($strLayout == "")
+			if ($strLayout == '')
 			{
-				$strLayout = "default";
+				$strLayout = 'default';
 			}
 			$this->SetLayout($strLayout);
 			
@@ -788,23 +786,23 @@
 			// This is because getmessage directly loads an error text and OnInit might render modules 
 
 			// Initialize "powered by"
-			$this->SetOutputItem("POWEREDBY","");
+			$this->SetOutputItem('POWEREDBY','');
 
 			// Initialize standard time items
-			$strCurrentYear = RenderDateTimeFormat(time(),"%Y",$this->GetTimeZone(),$this->GetLanguage());
+			$strCurrentYear = RenderDateTimeFormat(time(),'Y',$this->GetTimeZone(),$this->GetLanguage());
 
 			// Initialize WDK Documentation related items
-			$this->SetOutputItem("WDK","WDK");
-			$this->SetOutputItem("WDK_AUTHOR","Sascha Wildgrube");
-			$this->SetOutputItem("WDK_COPYRIGHT_PERIOD",WDK_COPYRIGHT_SINCE."-".$strCurrentYear);
-			$this->SetOutputItem("WDK_DOCS_URL","http://www.websitedevkit.com/");
-			$this->SetOutputItem("WDK_SCAFFOLDER_URL","http://www.websitedevkit.com/scaffolder/");
-			$this->SetOutputItem("WDK_SYSTEMREQUIREMENT_PHP_VERSION",'7.2.24');
-			$this->SetOutputItem("WDK_SYSTEMREQUIREMENT_UBUNTU_VERSION",'18.04');
-			$this->SetOutputItem("WDK_SYSTEMREQUIREMENT_APACHE_VERSION",'2.4.29');
-			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_MARIADB_VERSION','10.1.38');
-			
-		
+			$this->SetOutputItem('WDK','WDK');
+			$this->SetOutputItem('WDK_AUTHOR','Sascha Wildgrube');
+			$this->SetOutputItem('WDK_COPYRIGHT_PERIOD',WDK_COPYRIGHT_SINCE.'-'.$strCurrentYear);
+			$this->SetOutputItem('WDK_DOCS_URL','http://www.websitedevkit.com/');
+			$this->SetOutputItem('WDK_SCAFFOLDER_URL','http://www.websitedevkit.com/scaffolder/');
+			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_PHP_VERSION','7.2.24');
+			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_UBUNTU_VERSION','18.04');
+			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_APACHE_VERSION','2.4.29');
+			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_MARIADB_VERSION','10.1.38');			
+
+
 			// Include standard elements
 			// The ''.' is to defuse the deprecation test
 			$this->IncludeElement(''.'icon');
@@ -817,8 +815,12 @@
 			$this->IncludeElement(''.'form');
 			$this->IncludeElement(''.'toolbar');
 			$this->IncludeElement(''.'table');
+			
 
-		
+			// Progress Indicator
+			$icon = new CIconElement($this,'spin');
+			$this->SetOutputItem('PROGRESSINDICATOR',$icon->RenderIcon('spinner'));			
+
 			// Initialize Logo
 			$linkLogo = new CLinkElement($this,'logo');
 			$this->SetOutputItem('LOGO',$linkLogo->RenderLink($this->GetRootURL(),'?TID_TITLE?'));
@@ -1689,7 +1691,8 @@
 		function SetBodyItems($arrayItems)
 		{
 			$this->m_arrayBodyItems = ArrayMerge($this->m_arrayBodyItems,$arrayItems);	
-		}		
+		}
+		
 		
 		final
 		function GetLayoutConfigItem($strItem)
@@ -1837,6 +1840,11 @@
 				{
 					return $this->GetImageRootURL($strFile);	
 				}
+				$strFile = $this->MakeImageFileName($strImageID,"webp");
+				if (IsFile($this->GetImagesDir().$strFile))
+				{
+					return $this->GetImageRootURL($strFile);	
+				}
 			}
 			$strFile = $this->MakeImageFileName($strImageID,$strImageFileExtention);
 			if (IsFile($this->GetImagesDir().$strFile))
@@ -1862,6 +1870,11 @@
 					return $this->GetImageRootURL($strFile);	
 				}
 				$strFile = $this->MakeLayoutImageFileName($strImageID,$this->GetLayout(),"gif");
+				if (IsFile($this->GetImagesDir().$strFile))
+				{
+					return $this->GetImageRootURL($strFile);	
+				}
+				$strFile = $this->MakeLayoutImageFileName($strImageID,$this->GetLayout(),"webp");
 				if (IsFile($this->GetImagesDir().$strFile))
 				{
 					return $this->GetImageRootURL($strFile);	
@@ -1928,7 +1941,8 @@
 		{
 			if (IsFile($this->GetDownloadDir().$strFilePath))
 			{
-				return $this->GetDownloadRootURL().StringURLEncode($strFilePath);
+				$strFilePath = ReplaceString($strFilePath,' ','%20');
+				return $this->GetDownloadRootURL().$strFilePath;
 			}
 			return $this->MakeDownloadURL($strFilePath);
 		}
@@ -1936,10 +1950,10 @@
 		final
 		function GetTimeZone()
 		{
-			$strTimeZone = $this->GetVar("timezone");	
-			if (!IsValidTimezoneID($strTimeZone))
+			$strTimeZone = $this->GetVar('timezone');	
+			if (!IsValidTimeZoneID($strTimeZone))
 			{
-				return "UTC";
+				return 'UTC';
 			}
 			return $strTimeZone;
 		}
@@ -1947,7 +1961,7 @@
 		final
 		function SetTimeZone($strTimeZone)
 		{
-			if (IsValidTimezoneID($strTimeZone))
+			if (IsValidTimeZoneID($strTimeZone))
 			{
 				$this->SetVar("timezone",$strTimeZone);
 			}
@@ -2154,18 +2168,30 @@
 
 		
 		final
+		function GetLayoutVariant()
+		{
+			return $this->GetVar('layout_variant');	
+		}
+		final
+		function SetLayoutVariant($strLayoutVariant)
+		{
+			$this->SetVar('layout_variant',$strLayoutVariant);	
+		}
+
+
+		final
 		function GetLayout()
 		{
-			return $this->GetVar("layout");	
+			return $this->GetVar('layout');	
 		}
 		final
 		function SetLayout($strLayout)
 		{
 			if (ArrayValueExists($this->GetSupportedLayouts(),$strLayout) == false)
 			{
-				$strLayout = "default";	
+				$strLayout = 'default';	
 			}
-			$this->SetVar("layout",$strLayout);	
+			$this->SetVar('layout',$strLayout);	
 		}
 		
 		final
@@ -2176,7 +2202,7 @@
 			{
 				return $arrayLayouts;
 			}
-			return array("default");				
+			return array('default');				
 		}
 		
 		function OnGetSupportedLayouts()
@@ -2373,14 +2399,14 @@
 		}
 
 		final
-		function AddJavaScript($strTitle,$strID = "")
+		function AddJavaScript($strTitle,$strID = '')
 		{
-			if ($strID == "")
+			if ($strID == '')
 			{
 				$strID = $strTitle;	
 			}
 			$this->m_arrayJavaScripts[$strTitle] = array(
-				"id" => $strID);	
+				'id' => $strID);	
 		}
 
 		final
@@ -2488,17 +2514,18 @@
 			$strFile = $this->GetAssemblyLine()->GetResourceFilePath($strLanguage,$strID);
 			if ($strFile == false)
 			{
-				$this->Trace("Warning: Can not find resources for \"$strID\" for language \"$strLanguage\".");
+				$this->Trace("LoadStringResources: Warning: Can not find resources for \"$strID\" for language \"$strLanguage\".");
 			}
 			else
 			{
 				$bResult = $this->m_res->LoadStringResourceFile($strLanguage,$strFile);
 				if ($bResult == false)
 				{
-					$this->Trace("Warning: Failed to load resource file \"$strFile\".");
+					$this->Trace("LoadStringResources: Warning: Failed to load resource file \"$strFile\".");
 				}
 				else
 				{
+					$this->Trace('LoadStringResources: Loaded resources "'.$strID.'" for language "'.$strLanguage.'"');
 					return true;
 				}
 			}
@@ -2506,28 +2533,29 @@
 			$strFallbackLanguage = $this->GetFallbackLanguage();
 			if (!IsValidLanguageID($strFallbackLanguage))
 			{
-				$this->Trace("Warning: No fallback language configured.");
+				$this->Trace("LoadStringResources: Warning: No fallback language configured.");
 				return false;
 			}
 			else
 			{
-				$this->Trace("Warning: Trying fallback language \"$strFallbackLanguage\".");	
+				$this->Trace("LoadStringResources: Warning: Trying fallback language \"$strFallbackLanguage\".");	
 			}
 			
 			$strFile = $this->GetAssemblyLine()->GetResourceFilePath($strFallbackLanguage,$strID);
 			if ($strFile == false)
 			{
-				$this->Trace("Warning: Can not find resources for \"$strID\" for fallback language \"$strFallbackLanguage\".");
+				$this->Trace("LoadStringResources: Warning: Can not find resources for \"$strID\" for fallback language \"$strFallbackLanguage\".");
 			}
 			else
 			{
 				$bResult = $this->m_res->LoadStringResourceFile($strFallbackLanguage,$strFile);
 				if ($bResult == false)
 				{
-					$this->Trace("Warning: Failed to load resource file \"$strFile\".");
+					$this->Trace("LoadStringResources: Warning: Failed to load resource file \"$strFile\".");
 				}
 				else
 				{
+					$this->Trace('LoadStringResources: Loaded resources "'.$strID.'" for fallback language "'.$strFallbackLanguage.'"');
 					return true;
 				}
 			}
@@ -2828,30 +2856,37 @@
 		}
 
 		final		
-		function MakeSelfURL()
+		function MakeSelfURL($bEncoded=true)
 		{
-				return $this->MakeURL(array());
+				return $this->MakeURL(array(),$bEncoded=true);
 		}
 		
 		final		
-		function MakeIndexURL()
+		function MakeIndexURL($bEncoded=true)
 		{
 			$arrayParams["content"] = "index";
-			return $this->MakeURL($arrayParams);
+			return $this->MakeURL($arrayParams,$bEncoded=true);
 		}
 		
 		final		
-		function MakeLanguageURL($strLanguage)
+		function MakeLanguageURL($strLanguage,$bEncoded=true)
 		{
 			$arrayParams["language"] = $strLanguage;
-			return $this->MakeURL($arrayParams);
+			return $this->MakeURL($arrayParams,$bEncoded=true);
 		}
 		
 		final		
-		function MakeContentURL($strNewContent)
+		function MakeContentURL($strNewContent,$bEncoded=true)
 		{
 			$arrayParams["content"] = $strNewContent;
-			return $this->MakeURL($arrayParams);
+			return $this->MakeURL($arrayParams,$bEncoded=true);
+		}
+
+		final		
+		function MakeCommandURL($strCommand,$arrayParams,$bEncoded=true)
+		{
+			$arrayParams["command"] = $strCommand;
+			return $this->MakeURL($arrayParams,$bEncoded);
 		}
 
 		final
@@ -2867,15 +2902,15 @@
 		}
 		
 		final
-		function MakeImageFileName($strImageID,$strExtention="png")
+		function MakeImageFileName($strImageID,$strExtention='png')
 		{
-			return $strImageID.".".$strExtention;
+			return $strImageID.'.'.$strExtention;
 		}
 
 		final
-		function MakeFontFileName($strFontID)
+		function MakeFontFileName($strFontID,$strExtention='woff2')  
 		{
-			return $strFontID;
+			return $strFontID.'.'.$strExtention;
 		}
 
 		final
@@ -2981,23 +3016,27 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 			$strHeader = '';
 
 
-			// Load layout configuration
-			
+			// Load layout configuration file
 			$strLayoutConfigFile = $this->GetAssemblyLine()->GetLayoutConfigFilePath($this->GetLayout());
-						
-			$arrayLayoutConfig = array();			
 			if ($strLayoutConfigFile != '')
 			{
 				$this->SetLayoutConfigItems(LoadNamedArrayFromTextFile($strLayoutConfigFile));	
-				//$this->Trace('Layout config items:');
-				//$this->Trace($this->GetAllLayoutConfigItems());
 			}
+
+			// Load layout variant configuration file
+			if ($this->GetLayoutVariant() != '')
+			{
+				$strLayoutVariantConfigFile = $this->GetAssemblyLine()->GetLayoutConfigFilePath($this->GetLayout().'_'.$this->GetLayoutVariant());
+				if ($strLayoutVariantConfigFile != '')
+				{
+					$this->SetLayoutConfigItems(LoadNamedArrayFromTextFile($strLayoutVariantConfigFile));	
+				}
+			}
+
 	
 			// Add additional CSS files to be included
 			foreach ($this->m_arrayStyleSheets as $strTitle => $arrayStyleSheet)
 			{
-				//$this->Trace('RenderHeaderStyleSheets: Adding style sheet: '.$strTitle.':');
-				//$this->Trace($arrayStyleSheet);
 				$strURL = ArrayGetValue($arrayStyleSheet,'url');
 				if ($strURL != '')
 				{
@@ -3533,8 +3572,8 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 					$strStyle = "default";
 				}
 				$this->IncludeElement("imageteaser");
-				$teaser = new CImageTeaserElement($this,$strStyle);
-				return $teaser->RenderImageTeaser(
+				$imageteaser = new CImageTeaserElement($this,$strStyle);
+				return $imageteaser->RenderImageTeaser(
 					ArrayGetValue($arrayAttributes,"imageurl"),
 					ArrayGetValue($arrayAttributes,"title"),
 					ArrayGetValue($arrayAttributes,"text"),
@@ -3542,6 +3581,24 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 					ArrayGetValue($arrayAttributes,"linktext"),
 					GetBoolValue(ArrayGetValue($arrayAttributes,"externallink"))
 					);
+
+			case 'ICONTEASER':
+				$strStyle = ArrayGetValue($arrayAttributes,'style');
+				if ($strStyle == '')
+				{
+					$strStyle = 'default';
+				}
+				$this->IncludeElement("iconteaser");
+				$iconteaser = new CIconTeaserElement($this,$strStyle);
+				return $iconteaser->RenderIconTeaser(
+					ArrayGetValue($arrayAttributes,"iconid"),
+					ArrayGetValue($arrayAttributes,"title"),
+					ArrayGetValue($arrayAttributes,"text"),
+					ArrayGetValue($arrayAttributes,"linkurl"),
+					ArrayGetValue($arrayAttributes,"linktext"),
+					GetBoolValue(ArrayGetValue($arrayAttributes,"externallink"))
+					);
+
 
 			case "LINK":
 				$strStyle = ArrayGetValue($arrayAttributes,'style');
@@ -3651,17 +3708,6 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 					return $portfolio->RenderPortfolio($arrayPortfolio);
 				}
 				return "";								
-
-							
-			case "GOOGLEMAPS":
-			
-				$strLocation = ArrayGetValue($arrayAttributes,"location");
-				if ($this->m_elementGoogleMaps == null)
-				{
-					$this->IncludeElement("googlemaps");
-					$this->m_elementGoogleMaps = new CGoogleMapsElement($this,"default");	
-				}
-				return $this->m_elementGoogleMaps->RenderGoogleMaps($strLocation);
 
 			case "COUNTDOWN":
 				if ($this->m_elementCountDown == null) 
@@ -4173,10 +4219,16 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		final
 		function RenderFont()
 		{
-			$strFontID = $this->GetParam("id");
+			$strFontID = $this->GetParam('id');
+			$strFontExt = $this->GetParam('ext');
+			
+			if ($strFontExt == '')
+			{
+				$strFontEx = 'woff2';
+			}
 			
 			$strBinary = null;
-			if ($strFontID == "")
+			if ($strFontID == '')
 			{
 				exit();	
 			}
@@ -4221,13 +4273,13 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 			{
 				header('Content-type: application/font-sfnt');
 			}				
-			else if (StringSection($strFilePath,-4) == "woff")
+			else if (StringSection($strFilePath,-4) == 'woff')
 			{
 				header('Content-type: application/font-woff');
 			}
-			else if (StringSection($strFilePath,-5) == "woff2")
+			else if (StringSection($strFilePath,-5) == 'woff2')
 			{
-				header('Content-type: application/font-woff');
+				header('Content-type: font/woff2');
 			}
 			else
 			{
@@ -4383,6 +4435,12 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 			if (StringSection($strFilePath,-3) == "gif")
 			{
 				header('Content-type: image/gif');
+				print(FileReadBinary($strFilePath));
+				return true;
+			}
+			if (StringSection($strFilePath,-4) == "webp")
+			{
+				header('Content-type: image/webp');
 				print(FileReadBinary($strFilePath));
 				return true;
 			}
@@ -4596,7 +4654,7 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		{
 			/*
 			1. Check for static images dir then for assemblies
-			2. Check for png, then for jpg, then for gif
+			2. Check for png, then for jpg, then for gif, then for webp
 			*/
 
 			if ($strExtension == "")
@@ -4616,6 +4674,11 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 				{
 					return $strFilePath;	
 				}
+				$strFilePath = $this->GetImageFilePath($strImageID,"webp");
+				if ($strFilePath != false)
+				{
+					return $strFilePath;	
+				}				
 				return false;
 			}
 				
@@ -4662,6 +4725,11 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 				{
 					return $strFilePath;	
 				}
+				$strFilePath = $this->GetLayoutImageFilePath($strImageID, $strLayout, "webp");
+				if ($strFilePath != false)
+				{
+					return $strFilePath;	
+				}
 			}
 						
 			$strFilePath = $this->GetImagesDir() . $this->MakeLayoutImageFileName($strImageID,$strLayout,$strExtension);
@@ -4701,15 +4769,16 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 
 
 		final
-		function GetFontFilePath($strFontID)
+		function GetFontFilePath($strFontID, $strExt = 'woff2')
 		{
-			$strFilePath = $this->GetFontsDir() . $this->MakeFontFileName($strFontID);
+			$strFontFileName = $this->MakeFontFileName($strFontID,$strExt);
+			$strFilePath = $this->GetFontsDir() . $strFontFileName;
 			if (IsFile($strFilePath))
 			{
 				return $strFilePath;	
 			}
 			
-			$strFilePath = $this->GetAssemblyLine()->GetFontFilePath($strFontID);
+			$strFilePath = $this->GetAssemblyLine()->GetFontFilePath($strFontFileName);
 			if (IsFile($strFilePath))
 			{
 				return $strFilePath;
@@ -4720,7 +4789,7 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		final
 		function GetVideoFilePath($strVideoID)
 		{
-			$strFilePath = $this->GetVideosDir() . $this->MakeFontFileName($strVideoID);
+			$strFilePath = $this->GetVideosDir() . $this->MakeVideoFileName($strVideoID);
 			if (IsFile($strFilePath))
 			{
 				return $strFilePath;	
@@ -4834,7 +4903,16 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 			
 		function OnGetWebsiteTitle()
 		{
-			$strTitle = "";
+			foreach ($this->m_arrayPlugins as $plugin)
+			{
+				$strTitle = $plugin->OnGetWebsiteTitle();
+				if ($strTitle != '')
+				{
+					return $strTitle;	
+				}
+			}
+			
+			$strTitle = '';
 			if (IsValidContentID($this->GetContent()) == true)
 			{
 				$strContentUC = StringUppercase($this->GetContent());
@@ -4843,7 +4921,7 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 					if ($strContentUC != 'INDEX')
 					{
 						$strTitle = $this->LoadString('TID_TITLE_'.$strContentUC);
-						if ($strTitle == "")
+						if ($strTitle == '')
 						{
 							$strTitle = $this->LoadString('TID_NAVIGATION_'.$strContentUC);	
 						}
@@ -4870,28 +4948,37 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 
 		function OnGetWebsiteDescription()
 		{
-			$strText = $this->LoadString("TID_META_DESCRIPTION_".StringUppercase($this->GetContent()));
-			if ($strText != "")
+			foreach ($this->m_arrayPlugins as $plugin)
+			{
+				$strDescription = $plugin->OnGetWebsiteDescription();
+				if ($strDescription != '')
+				{
+					return $strDescription;	
+				}
+			}		
+			
+			$strText = $this->LoadString('TID_META_DESCRIPTION_'.StringUppercase($this->GetContent()));
+			if ($strText != '')
 			{
 				return $strText;
 			}
-			$strText = $this->LoadString("TID_META_DESCRIPTION_DEFAULT");
-			if ($strText != "")
+			$strText = $this->LoadString('TID_META_DESCRIPTION_DEFAULT');
+			if ($strText != '')
 			{
 				return $strText;
 			}
-			return "";	
+			return '';	
 		}
 
 		function OnGetWebsiteKeywords()
 		{
-			$strText = $this->LoadString("TID_META_KEYWORDS_".StringUpperCase($this->GetContent()));
-			$strTextDefault = $this->LoadString("TID_META_KEYWORDS_DEFAULT");
-			if ($strTextDefault != "")
+			$strText = $this->LoadString('TID_META_KEYWORDS_'.StringUpperCase($this->GetContent()));
+			$strTextDefault = $this->LoadString('TID_META_KEYWORDS_DEFAULT');
+			if ($strTextDefault != '')
 			{
-				if ($strText != "")
+				if ($strText != '')
 				{
-					$strText = $strText.", ".$strTextDefault;   
+					$strText = $strText.' '.$strTextDefault;   
 				}
 				else
 				{
@@ -4903,18 +4990,26 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		
 		function OnGetOpenGraphImageURL()
 		{
+			foreach ($this->m_arrayPlugins as $plugin)
+			{
+				$strImageURL = $plugin->OnGetOpenGraphImageURL();
+				if ($strImageURL != '')
+				{
+					return $strImageURL;	
+				}
+			}					
 			return $this->GetImageURL('opengraph','png');	
 		}
 
 		
 		function OnSessionCreate()
 		{
-			$this->Trace("CWebsite::OnSessionCreate");
+			$this->Trace('CWebsite::OnSessionCreate');
 			if ($this->GetSessionMode() == SESSION_MODE_LOCAL_COOKIE)
 			{
-				return "local";					
+				return 'local';					
 			}
-			$strSessionID = "";
+			$strSessionID = '';
 			return $strSessionID;			
 		}
 		
@@ -5375,12 +5470,22 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		function CheckCondition($strCondition)
 		{
 			$bInvert = false;
-			if (StringSection($strCondition,0,1) == "!")
+			if (StringSection($strCondition,0,1) == '!')
 			{
 				$bInvert = true;
 				$strCondition	= StringSection($strCondition,1);
 			}
 			$bResult = $this->OnCheckCondition($strCondition);
+			if ($bResult == false)
+			{
+				foreach ($this->m_arrayPlugins as $plugin)
+				{
+					if ($bResult == false)
+					{
+						$bResult = $plugin->OnCheckCondition($strCondition);
+					}
+				}
+			}
 			if ($bInvert == true)
 			{
 				return !$bResult;	
@@ -5525,17 +5630,18 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		{
 			//$this->AddJavaScriptURL('jquery','https://code.jquery.com/jquery-1.12.4.min.js','sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=');
 			//$this->AddJavaScriptURL('jquery','https://code.jquery.com/jquery-3.5.1.slim.min.js','sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj');
-			$this->AddJavaScriptURL('jquery','https://code.jquery.com/jquery-3.5.1.min.js','sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==');
-		
-		
-		
+			//$this->AddJavaScriptURL('jquery','https://code.jquery.com/jquery-3.5.1.min.js','sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==');
+			$this->AddJavaScript('jquery','jquery-3.5.1.min');
+
 		}		
 
 		function ActivateBootstrap3()
 		{
 			$this->ActivateJQuery();
-			$this->AddStyleSheetURL('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css','sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u');
-			$this->AddJavaScriptURL('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js','sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa');
+			//$this->AddStyleSheetURL('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css','sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u');
+			$this->AddStyleSheet('bootstrap','bootstrap-3.3.7.min');
+			//$this->AddJavaScriptURL('bootstrap','https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js','sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa');
+			$this->AddJavaScript('bootstrap','bootstrap-3.3.7.min');
 		}
 
 		function ActivateBootstrap4()
@@ -5547,7 +5653,17 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		
 		function ActivateFontAwesome4()
 		{ 
-			$this->AddStyleSheetURL('fontawesome4','https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');	
+			//$this->AddStyleSheetURL('fontawesome4','https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');	
+			$this->AddStyleSheet('fontawesome4','fontawesome-4.7.0');	
+			$this->SetLayoutConfigItem(
+				'FONTAWESOMEURL',
+				$this->MakeCommandURL(
+					'font',
+					array(
+						'id' => 'fontawesome-4.7.0'
+						),
+					false
+					));
 		}
 
 		function ActivateFontAwesome5()
@@ -5560,8 +5676,10 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 		{
 			$this->ActivateJQuery();
 			
-			$this->AddJavaScriptURL('react','https://unpkg.com/react@16/umd/react.development.js'); 
-			$this->AddJavaScriptURL('react-dom','https://unpkg.com/react-dom@16/umd/react-dom.development.js'); 
+			//$this->AddJavaScriptURL('react','https://unpkg.com/react@16/umd/react.development.js'); 
+			$this->AddJavaScript('react','react-16.14.0.development');
+			//$this->AddJavaScriptURL('react-dom','https://unpkg.com/react-dom@16/umd/react-dom.development.js'); 
+			$this->AddJavaScript('react-dom','react-dom-16.14.0.development');
 
 			$this->AddJavaScript('wdk');
 			$this->AddJavaScript('wdk-react');
@@ -5571,7 +5689,9 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 
 		function ActivateD3v5()
 		{
-			$this->AddJavaScriptURL('d3v5','https://d3js.org/d3.v5.min.js'); 
+			//$this->AddJavaScriptURL('d3v5','https://d3js.org/d3.v5.min.js'); 
+			$this->AddJavaScript('d3v5','d3-5.16.0.min'); 
+		
 			return true;
 		}		
 		
@@ -5622,19 +5742,19 @@ FileRead(GetWDKDir() . "wdk_help.txt").
 			// Check for invalid TIDs if required
 			if ($this->m_bCheckInvalidTID == true)
 			{
-				$this->Trace("Checking for invalid TIDs...");
+				$this->Trace('Checking for invalid TIDs...');
 				
 				$arrayErrors = GetInvalidTIDs($this->m_res->GetStrings($this->GetLanguage()));
 				if (ArrayCount($arrayErrors) > 0)
 				{
-					$this->Trace("Invalid TID detected");	
+					$this->Trace('Invalid TID detected');	
 					$this->Trace($arrayErrors);
 					$this->SystemEvent(
-						"WARNING",
-						"INVALID_TID",
-						"Invalid TIDs found",
+						'WARNING',
+						'INVALID_TID',
+						'Invalid TIDs found',
 						array(
-							"output" => $arrayErrors
+							'output' => $arrayErrors
 							)
 						);
 					
