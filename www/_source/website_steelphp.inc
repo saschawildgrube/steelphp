@@ -453,28 +453,6 @@
 		}
 		
 		
-		
-		
-		function OnGetDateLocalFormat($strCountryID)
-		{
-			switch ($strCountryID)
-			{
-			default:
-				return "%Y-%m-%d";
-			}
-		}
-
-		function OnGetTimeLocalFormat($strCountryID)
-		{
-			switch ($strCountryID)
-			{
-				default:
-					return "%H:%M:%S";
-
-			}
-		}
-		
-		
 
 	}
 	
