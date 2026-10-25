@@ -129,6 +129,7 @@
 		private $m_elementSourceCode;
 		private $m_elementYouTube;
 		private $m_elementCountDown;
+		private $m_elementTableOfContents;
 		
 		private $m_arrayDynamicNavigationTree;
 		
@@ -799,7 +800,7 @@
 			$this->SetOutputItem('WDK_COPYRIGHT_PERIOD',WDK_COPYRIGHT_SINCE.'-'.$strCurrentYear);
 			$this->SetOutputItem('WDK_DOCS_URL','http://www.websitedevkit.com/');
 			$this->SetOutputItem('WDK_SCAFFOLDER_URL','http://www.websitedevkit.com/scaffolder/');
-			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_PHP_VERSION','7.2.24');
+			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_PHP_VERSION','7.4.33');
 			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_UBUNTU_VERSION','18.04');
 			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_APACHE_VERSION','2.4.29');
 			$this->SetOutputItem('WDK_SYSTEMREQUIREMENT_MARIADB_VERSION','10.1.38');			
@@ -1005,7 +1006,7 @@
 				}
 				else
 				{
-					$strOutput .= $this->RenderTrace();
+					$strOutput .= $this->RenderTraceLog();
 				}
 			}
 			else
@@ -2485,6 +2486,13 @@
 		}
 
 		
+		function IsMobileClient()
+		{
+			$strUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+			return (isset($_SERVER['HTTP_SEC_CH_UA_MOBILE']) && $_SERVER['HTTP_SEC_CH_UA_MOBILE'] == '?1')
+				|| preg_match('/Mobile|Android|iPhone|iPad|iPod|IEMobile|Opera Mini|Opera Mobi|Silk|Kindle/i',$strUserAgent) === 1;
+		}
+
 		final
 		function EnforceHTTPS()
 		{
@@ -3356,9 +3364,10 @@
 		final
 		function ReplaceGenericOutputItems($strOutput)
 		{
+			// Placeholder delimiters are ASCII. Keep all search/slice offsets in bytes
+			// so large UTF-8 pages are not recounted for every registered item.
 			$nFirstTagStartPos = 0;
 
-			$nOutputLen = StringLength($strOutput);            
 			$arrayTags = array();
 			foreach ($this->m_arrayGenericOutputItems as $strItemID => $arrayAttributeList)
 			{
@@ -3371,29 +3380,41 @@
 				{
 					$nNextTagStartPos++;
 
-					$nNextTagStartPos = FindString($strOutput,$strTagStart,false,$nNextTagStartPos);
+					$nNextTagStartPos = strpos($strOutput,$strTagStart,$nNextTagStartPos);
+					if ($nNextTagStartPos === false)
+					{
+						$nNextTagStartPos = -1;
+					}
 					if ($nNextTagStartPos != -1)
 					{
-						$strFound = "";
-						$nNextTagStartPos = FindStringMultiple(
-							$strOutput, 
-							array(
+						$nBoundaryPos = -1;
+						foreach (array(
 								$strTagStart.$strTagEnd,
 								$strTagStart." ",
 								$strTagStart."\t",
 								$strTagStart."\n",
 								$strTagStart."\r\n"
-								),
-							$strFound,
-							false,
-							$nNextTagStartPos);
+								) as $strBoundary)
+						{
+							$nCandidatePos = strpos($strOutput,$strBoundary,$nNextTagStartPos);
+							if ($nCandidatePos !== false && ($nBoundaryPos == -1 || $nCandidatePos < $nBoundaryPos))
+							{
+								$nBoundaryPos = $nCandidatePos;
+							}
+							if ($nBoundaryPos == $nNextTagStartPos)
+							{
+								break;
+							}
+						}
+						$nNextTagStartPos = $nBoundaryPos;
 
 						if ($nNextTagStartPos != -1)
 						{
 							
-							$nNextTagEndPos = FindString($strOutput, $strTagEnd, false, $nNextTagStartPos);
-							if ($nNextTagEndPos == -1)
+							$nNextTagEndPos = strpos($strOutput,$strTagEnd,$nNextTagStartPos);
+							if ($nNextTagEndPos === false)
 							{
+								$nNextTagEndPos = -1;
 								$this->Error("Syntax Error after \"{".$strItemID."\": Missing end tag \"$strTagEnd\". nNextTagStartPos=$nNextTagStartPos. nNextTagEndPos=$nNextTagEndPos.");
 							}
 							if ($nNextTagEndPos < $nNextTagStartPos)
@@ -3401,10 +3422,10 @@
 								$this->Error("nNextTagEndPos($nNextTagEndPos) < nNextTagStartPos($nNextTagStartPos)");    
 							}
 							
-							$strItemTag = StringSection(
+							$strItemTag = substr(
 								$strOutput,
 								$nNextTagStartPos,
-								$nNextTagEndPos - $nNextTagStartPos + StringLength($strTagEnd)
+								$nNextTagEndPos - $nNextTagStartPos + strlen($strTagEnd)
 								);
 								
 							$arrayAttributes = array();
@@ -3985,7 +4006,7 @@
 			$this->Trace("PrepareMessages END");
 			$this->ProfilingTrace();
 			
-			// Prepare OpenGrapg
+			// Prepare OpenGraph
 			$this->Trace("PrepareOpenGraph START");
 			$this->PrepareOpenGraph();
 			$this->Trace("PrepareOpenGraph END");
@@ -4077,10 +4098,12 @@
 				$strOutput = $this->ReplaceGenericOutputItems($strOutput);
 				$stopwatchReplaceGenericOutputItems->Stop();
 				
-				$this->ProfilingTrace();
-				$this->Trace("Rendering: RenderJavaScripts()"); 
-				$strOutput = $this->RenderJavaScripts($strOutput);
-
+				if ($nIteration > 2)
+				{
+					$this->ProfilingTrace();
+					$this->Trace("Rendering: RenderJavaScripts()"); 
+					$strOutput = $this->RenderJavaScripts($strOutput);
+				}
 				
 				$nIteration--;
    	      
@@ -4089,7 +4112,8 @@
 					$nNewOutputStrLen = StringLength($strOutput);
 					$this->Trace("Rendering: Old length: $nOldOutputStrLen");
 					$this->Trace("Rendering: New length: $nNewOutputStrLen");
-					if ($nNewOutputStrLen == $nOldOutputStrLen)
+					if (	$nNewOutputStrLen == $nOldOutputStrLen
+						&&	ArrayCount($this->m_arrayJavaScripts) == 0)
 					{
 						$nIteration = 0;
 					}
@@ -4218,8 +4242,6 @@
 				header('Content-type: image/png');
 				imagepng($image);
 			}
-		
-			imagedestroy($image);
 			exit;	
 		}
 
@@ -4446,6 +4468,12 @@
 				print(FileReadBinary($strFilePath));
 				return true;
 			}
+			if (StringSection($strFilePath,-3) == "svg")
+			{
+				header('Content-type: image/svg+xml');
+				print(FileReadBinary($strFilePath));
+				return true;
+			}
 			if (StringSection($strFilePath,-4) == "webp")
 			{
 				header('Content-type: image/webp');
@@ -4607,7 +4635,7 @@
 			2. Check for static css dir then for assemblies
 			*/
 						
-			$strFilePath = $this->GetCssDir() . $this->MakeLayoutCssFileName($strLayout);
+			$strFilePath = $this->GetStyleSheetsDir() . $this->MakeLayoutCssFileName($strLayout);
 			$this->Trace($strFilePath);
 			if (IsFile($strFilePath))
 			{
@@ -4621,7 +4649,7 @@
 				return $strFilePath;	 
 			}			
 
-			$strFilePath = $this->GetCssDir() . $this->MakeLayoutCssFileName("default");
+			$strFilePath = $this->GetStyleSheetsDir() . $this->MakeLayoutCssFileName("default");
 			$this->Trace($strFilePath);
 			if (IsFile($strFilePath))
 			{
@@ -5140,6 +5168,12 @@
 				}
 			}
 			return true;
+		}
+
+		function OnUserLoadSettings()
+		{
+			$this->Error('OnUserLoadSettings() is not implemented.');
+			return false;
 		}
 
 
