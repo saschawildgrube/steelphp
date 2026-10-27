@@ -114,12 +114,11 @@
 
 	function GetErrorLogPath()
 	{
-		/*
-			This will work in some cases but not for all.
-			Find out the real location of the error_log
-			or return an empty string.
-		*/		
-		return GetDocumentRootDir()."../../logs/error_log";	
+		if (GetEnvID() == 'dev')
+		{
+			return GetDocumentRootDir().'../../logs-dev/error.log';
+		}
+		return GetDocumentRootDir()."../../logs/error.log";	
 	}
 
 
